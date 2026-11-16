@@ -1,0 +1,64 @@
+Create a single-file HTML calorie intake tracker app with no backend, 
+no build steps, and no external dependencies except Chart.js from CDN.
+
+## Design
+- Green health-themed color scheme with gradient accents
+- CSS custom properties for light and dark mode (toggle stored in localStorage)
+- Sticky header with app title and dark/light mode toggle
+- Two-column layout: 270px sidebar on the left, main content on the right
+- Fully responsive — stacks to single column on mobile
+- Smooth transitions on theme change
+
+## User Profile (Sidebar)
+- Input fields: Name, Gender (Male/Female), Age, Weight (kg), Height (cm), 
+  Activity Level (Sedentary / Lightly Active / Moderately Active / Very Active)
+- Calculate daily calorie goal using the Mifflin-St Jeor BMR formula:
+  Male:   BMR = (10 × weight) + (6.25 × height) − (5 × age) + 5
+  Female: BMR = (10 × weight) + (6.25 × height) − (5 × age) − 161
+  Multiply BMR by activity multiplier: 1.2 / 1.375 / 1.55 / 1.725
+- Save profile to localStorage and restore on page load
+
+## Food Entry
+- Search input with autocomplete against a built-in database of 88+ common foods
+- Foods have: name, calories per 100g, category, default unit, 
+  and macros (carbs, protein, fat per 100g)
+- Categories: Fruits, Vegetables, Grains, Protein, Dairy, Snacks, Beverages
+- Quantity field with unit selector: Piece / Bowl / Cup / Gram / ml
+- Convert units to grams to calculate actual calories and macros
+- If food is not in the database, show a manual calorie entry fallback
+- Add food button appends entry to today's log
+
+## Dashboard (Main Area)
+- Circular SVG progress ring showing calories consumed vs daily goal
+  - Ring color shifts: green → orange → red as you approach/exceed goal
+  - Displays consumed calories in center, label below
+- 4 KPI tiles in a grid: Calories Consumed, Calories Remaining, Daily Goal, Items Logged
+- Macro progress bars for Carbs, Protein, Fat 
+  (normalized against recommended daily targets: 300g carbs, 50g protein, 65g fat)
+- Doughnut chart showing calorie distribution by food category
+- Bar chart showing calories per individual food entry
+- Both charts use Chart.js 4.4 from CDN
+
+## Nutrition Guide Panel (Collapsible Sidebar Section)
+- Recommended daily calorie ranges by gender and age group
+- Macronutrient split guidelines (Carbs 45–65%, Protein 10–35%, Fat 20–35%)
+- Micronutrient highlights: fiber, water, sugar, sodium
+- Dynamic tip that updates based on current intake 
+  (under goal / near goal / over goal)
+
+## Food Log Table
+- Columns: Food | Category | Quantity | Unit | Calories | Time | Remove button
+- Color-coded category badges
+- Scrollable with totals row at the bottom
+- "Clear Today" button to reset all entries
+
+## Persistence
+- Save today's food log to localStorage
+- Restore entries on page load
+- Profile settings also persisted
+
+## Tech stack
+- HTML5, CSS3 with custom properties
+- Vanilla JavaScript ES6+ only
+- Chart.js 4.4 via CDN (jsdelivr)
+- No frameworks, no build tools, no npm
